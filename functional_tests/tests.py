@@ -11,6 +11,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
+        self.browser.refresh()
         self.browser.quit()
 
 
@@ -46,7 +47,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
         import time
-        time.sleep(3)
+        time.sleep(1)
 
         edith_list_url = self.browser.current_url
         self.assertRegex( edith_list_url, '/lists/.+')
@@ -61,7 +62,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
 
-        time.sleep(3)
+        time.sleep(1)
 
 
         # The page updates again, and now shows both items on her list
@@ -89,7 +90,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
 
-        time.sleep(3)
+        time.sleep(1)
 
         # Francis gets his own unique URL
         francis_list_url = self.browser.current_url
@@ -103,4 +104,3 @@ class NewVisitorTest(LiveServerTestCase):
 
 
         # Satisfied , they both goes back to sleep
-        self.fail('Finish the test!')
