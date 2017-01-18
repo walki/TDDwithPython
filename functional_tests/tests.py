@@ -2,6 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from django.test import LiveServerTestCase
 
+import unittest
+
+
 class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -37,10 +40,12 @@ class NewVisitorTest(LiveServerTestCase):
         # is tying fly-fishing lures)
         inputbox.send_keys('Buy peacock feathers')
 
-        # When she hits enter, the page updates, and now the page lists
+        # When she hits enter, she is taken to a new URL,
+        # and now the page lists:
         # "1: Buy peacock feathers" as an item in a to-do lists
         inputbox.send_keys(Keys.ENTER)
-
+        edith_list_url = self.browser.current_url
+        self.assertRegex( edith_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
 
         # There is still a text box inviting her to add another item. She
