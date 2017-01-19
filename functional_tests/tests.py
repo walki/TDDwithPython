@@ -3,7 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from django.test import LiveServerTestCase
 
 import unittest
-
+import time
 
 class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
@@ -47,7 +47,6 @@ class NewVisitorTest(LiveServerTestCase):
         # "1: Buy peacock feathers" as an item in a to-do lists
         inputbox.send_keys(Keys.ENTER)
 
-        import time
         time.sleep(1)
 
         edith_list_url = self.browser.current_url
@@ -90,7 +89,6 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
 
-
         time.sleep(1)
 
         # Francis gets his own unique URL
@@ -122,6 +120,10 @@ class NewVisitorTest(LiveServerTestCase):
 
         # She starts a new list and sees the inputbox is nicely centered there too
         inputbox.send_keys('testing\n')
+        inputbox.send_keys(Keys.ENTER)
+
+        time.sleep(1)
+
         inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertAlmostEqual(
             inputbox.location['x'] + inputbox.size['width'] / 2,
