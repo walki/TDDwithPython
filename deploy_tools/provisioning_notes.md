@@ -35,3 +35,13 @@ Assume we have a user account at /home/username
 │       ├── source
 │       ├── static
 │       └── virtualenv
+
+
+// Adding the new site to the available and enabled sites lists
+sed "s/SITENAME/superlists.backuptheb.us/g" deploy_tools/nginx.template.conf | sudo tee /etc/nginx/sites-available/superlists.backuptheb.us
+sudo ln -s ../sites-available/superlists.backuptheb.us /etc/nginx/sites-enabled/superlists.backuptheb.us
+// Adding the systemd start up script
+sed "s/SITENAME/superlists.backuptheb.us/g" deploy_tools/gunicorn-systemd.template.conf | sudo tee /etc/systemd/system/gunicorn.superlists.backuptheb.us.service
+// Start the new Service
+sudo service nginx reload
+sudo systemctl start gunicorn.superlists.backuptheb.us.service
