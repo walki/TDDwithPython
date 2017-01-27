@@ -12,7 +12,7 @@ class ItemValidationTest(FunctionalTest):
         # Edith goes to the home page and accidently tries to submit
         # an empty list item. She hits Enter on the empty input box
         self.browser.get(self.server_url)
-        self.browser.find_element_by_id('id_new_item').send_keys(Keys.ENTER)
+        self.get_item_input_box().send_keys(Keys.ENTER)
         time.sleep(1)
 
         # The home pag refreshes, and there is an error message saying
@@ -21,14 +21,14 @@ class ItemValidationTest(FunctionalTest):
         self.assertEqual(error.text, "You can't have an empty list item")
 
         # She tries again with some text for the item, which now woks
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Buy Milk')
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
         self.check_for_row_in_list_table('1: Buy Milk')
 
         # Perversly, she now decides to submit a second blank list item
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
 
@@ -39,7 +39,7 @@ class ItemValidationTest(FunctionalTest):
 
 
         # And she can correct it by filling some text in
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Make Tea')
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
